@@ -1,0 +1,1 @@
+cmake ${CMAKE_ARGS} ..
