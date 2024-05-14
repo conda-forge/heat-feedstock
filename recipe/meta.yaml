@@ -1,5 +1,5 @@
 {% set name = "heat" %}
-{% set version = "1.4.0" %}
+{% set version = "1.4.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
-  sha256: 6836fa10f9ce62ea61cf1bdc3283d7ad0c305836cc5a08c4edfd30695708e788
+  sha256: ecd871717c372a6983f643c0178dda44bc017d6b32b9258dbf3775af95f580ce
 
 build:
   skip: true  # [win]
@@ -21,6 +21,7 @@ requirements:
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - cmake
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
