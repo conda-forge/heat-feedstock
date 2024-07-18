@@ -1,5 +1,5 @@
 {% set name = "heat" %}
-{% set version = "1.4.1" %}
+{% set version = "1.4.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
-  sha256: ecd871717c372a6983f643c0178dda44bc017d6b32b9258dbf3775af95f580ce
+  sha256: d6714428a9c5204c1c44a2b246f228effaddc688f812277f229f4acdbcfeb7c5
 
 build:
   skip: true  # [win]
@@ -33,8 +33,8 @@ requirements:
     - python
     - openmpi
     - mpi4py >=3.0.0
-    - {{ pin_compatible('numpy') }}
-    - pytorch >=1.8.0,<2.0.2
+    - numpy >=1.22,<2.0.0
+    - pytorch >=1.12.0,<2.3.2
     - scipy >=0.14.0
     - pillow >=6.0.0
     - torchvision >=0.8.0
