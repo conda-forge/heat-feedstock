@@ -29,6 +29,7 @@ requirements:
     - python
     - pip
     - openmpi
+    - setuptools
   run:
     - python
     - openmpi
