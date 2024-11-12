@@ -1,5 +1,5 @@
 {% set name = "heat" %}
-{% set version = "1.4.2" %}
+{% set version = "1.5.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,13 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
-  sha256: d6714428a9c5204c1c44a2b246f228effaddc688f812277f229f4acdbcfeb7c5
+  sha256: a2e2d7f0c1f340ab2597f2b9c02563f0057419a53287fbf4cdf1a7934bc6d60b
 
 build:
   skip: true  # [win]
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux]
   script: {{ PYTHON }} -m pip install . -vv
-  number: 1
+  number: 0
 
 requirements:
   build:
@@ -29,6 +29,7 @@ requirements:
     - python
     - pip
     - openmpi
+    - setuptools
   run:
     - python
     - openmpi
