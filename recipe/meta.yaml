@@ -23,7 +23,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
-    - {{ compiler('cuda') }} 
+    - {{ compiler('cuda') }} # [linux]
     - cudatoolkit # [linux]
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
