@@ -247,6 +247,3 @@ Feedstock Maintainers
 * [@JuanPedroGHM](https://github.com/JuanPedroGHM/)
 * [@mrfh92](https://github.com/mrfh92/)
 
-
-<!-- dummy commit to enable rerendering -->
-
