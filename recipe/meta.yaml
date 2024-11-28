@@ -8,7 +8,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
   sha256: a2e2d7f0c1f340ab2597f2b9c02563f0057419a53287fbf4cdf1a7934bc6d60b
 
 build:
@@ -19,7 +19,8 @@ build:
   # 2024/11 Building with CUDA 11.8 seems to fail due torch/torchvision version mismatch
   # or running out of disk space on the CIs
   # (confirming https://github.com/conda-forge/pytorch-cpu-feedstock/blob/main/recipe/meta.yaml)
-  skip: true  # [cuda_compiler_version == "11.8"]
+  # 2024/11: Following combination doesn't work at this time
+  skip: true  # [c_stdlib_version == "2.28" and cuda_compiler_version != "12.6"]
 
 requirements:
   build:
