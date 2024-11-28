@@ -1,5 +1,6 @@
 {% set name = "heat" %}
 {% set version = "1.5.0" %}
+{% set cuda_compiler_version = os.environ.get('cuda_compiler_version', 'None') %}
 
 package:
   name: {{ name|lower }}
