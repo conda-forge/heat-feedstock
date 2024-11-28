@@ -54,6 +54,7 @@ cuda_compiler_version:                              # [linux and aarch64]
   - None                                            # [linux and aarch64]
   - 11.8                                            # [linux and aarch64]
   - 12.0                                            # [linux and aarch64]
+  - 12.2                                            # [linux and aarch64]
   - 12.6                                            # [linux and aarch64]
 # end override of monster zip
 
@@ -97,4 +98,5 @@ cuda_compiler_version:                              # [linux64]
   - None                                            # [linux64]
   - 11.8                                            # [linux64]
   - 12.0                                            # [linux64]
+  - 12.2                                            # [linux64]             
   - 12.6                                            # [linux64]
