@@ -58,8 +58,7 @@ outputs:
         - openmpi
         - mpi4py >=3.0.0
         - numpy >=1.22,<2.0.0
-        - pytorch >=1.12.0,<2.3.2      # [cuda_compiler == 'None' or osx]
-        - pytorch-gpu >=1.12.0,<2.3.2  # [cuda_compiler != 'None' and (linux or aarch64)]
+        - pytorch >=1.12.0,<2.3.2      
         - scipy >=0.14.0
         - pillow >=6.0.0
         - torchvision >=0.8.0
