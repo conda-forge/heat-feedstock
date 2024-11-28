@@ -1,5 +1,7 @@
 {% set name = "heat" %}
 {% set version = "1.5.0" %}
+{% set cuda_compiler = os.environ.get('cuda_compiler', 'None') %}
+{% set cuda_compiler_version = os.environ.get('cuda_compiler_version', 'None') %}
 
 package:
   name: {{ name|lower }}
@@ -23,28 +25,22 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
+    - {{ compiler('cuda') }}         # [cuda_compiler != 'None' and linux]
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
   host:
+    # GPU requirements
+    {% if cuda_compiler != 'None' %}
+    - cudnn
+    - nccl
+    - magma
+    - cuda-version {{ cuda_compiler_version }}
+    {% endif %}
+    # everything else
     - python
     - pip
     - openmpi
     - setuptools
-  run:
-    - python
-    - openmpi
-    - mpi4py >=3.0.0
-    - numpy >=1.22,<2.0.0
-    - pytorch-gpu >=1.12.0,<2.3.2
-    - pytorch >=1.12.0,<2.3.2
-    - scipy >=0.14.0
-    - pillow >=6.0.0
-    - pytorch::torchvision >=0.8.0
-    - h5py >=2.8.0=mpi*
-    - netCDF4 >=1.5.6
-    - scikit-learn >=0.24.0
-    - libgomp  # [linux]
-    - llvm-openmp  # [osx]
 
 test:
   imports:
@@ -53,6 +49,24 @@ test:
     - pip check
   requires:
     - pip
+
+outputs:
+  - name: heat
+    requirements:
+      run:
+        - python
+        - openmpi
+        - mpi4py >=3.0.0
+        - numpy >=1.22,<2.0.0
+        - pytorch >=1.12.0,<2.3.2
+        - scipy >=0.14.0
+        - pillow >=6.0.0
+        - torchvision >=0.8.0
+        - h5py >=2.8.0=mpi*
+        - netCDF4 >=1.5.6
+        - scikit-learn >=0.24.0
+        - libgomp  # [linux]
+        - llvm-openmp  # [osx]
 
 about:
   home: https://github.com/helmholtz-analytics/heat
