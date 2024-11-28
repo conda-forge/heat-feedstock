@@ -14,7 +14,7 @@ source:
 build:
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux or aarch64]
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
   skip: true  # [win]
   # 2024/11 Building with CUDA 11.8 seems to fail due to running out of disk space on the CIs
   # (confirming https://github.com/conda-forge/pytorch-cpu-feedstock/blob/main/recipe/meta.yaml)
