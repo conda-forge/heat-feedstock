@@ -58,7 +58,8 @@ outputs:
         - openmpi
         - mpi4py >=3.0.0
         - numpy >=1.22,<2.0.0
-        - pytorch >=1.12.0,<2.3.2      
+        - pytorch >=1.12.0,<2.3.2        # [osx or cuda_compiler_version == "None"]     
+        - pytorch-gpu >=1.12.0,<2.3.2    # [cuda_compiler_version != "None" and (linux or aarch64)]     
         - scipy >=0.14.0
         - pillow >=6.0.0
         - torchvision >=0.8.0
@@ -67,28 +68,6 @@ outputs:
         - scikit-learn >=0.24.0
         - libgomp  # [linux or aarch64]
         - llvm-openmp  # [osx]
-  - name: heat-gpu
-    {% if cuda_compiler != 'None' and (linux or aarch64) %}
-    requirements:
-      run:
-        - python
-        - openmpi
-        - mpi4py >=3.0.0
-        - numpy >=1.22,<2.0.0
-        - pytorch-gpu >=1.12.0,<2.3.2
-        - scipy >=0.14.0
-        - pillow >=6.0.0
-        - torchvision >=0.8.0
-        - h5py >=2.8.0=mpi*
-        - netCDF4 >=1.5.6
-        - scikit-learn >=0.24.0
-        - cudnn
-        - nccl
-        - magma
-        - cuda-version {{ cuda_compiler_version }}
-        - libgomp  # [linux or aarch64]
-        - llvm-openmp  # [osx]
-    {% endif %}
 
 about:
   home: https://github.com/helmholtz-analytics/heat
