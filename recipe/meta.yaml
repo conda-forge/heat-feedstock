@@ -16,11 +16,10 @@ build:
   script: {{ PYTHON }} -m pip install . -vv
   number: 0
   skip: true  # [win]
-  # 2024/11 Building with CUDA 11.8 seems to fail due torch/torchvision version mismatch
-  # or running out of disk space on the CIs
+  # 2024/11 Building with CUDA 11.8 seems to fail due to running out of disk space on the CIs
   # (confirming https://github.com/conda-forge/pytorch-cpu-feedstock/blob/main/recipe/meta.yaml)
-  # 2024/11: Following combination doesn't work at this time
-  skip: true  # [c_stdlib_version == "2.28" and cuda_compiler_version != "12.6"]
+  # 2024/11: Following stdlib/cuda combination fails
+  skip: true  # [cuda_compiler_version == "11.8" or (c_stdlib_version == "2.28" and cuda_compiler_version != "12.6")]
 
 requirements:
   build:
