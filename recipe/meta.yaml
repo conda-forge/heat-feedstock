@@ -1,5 +1,5 @@
 {% set name = "heat" %}
-{% set version = "1.5.0" %}
+{% set version = "1.5.1" %}
 {% set cuda_compiler = os.environ.get('cuda_compiler', 'None') %}
 {% set cuda_compiler_version = os.environ.get('cuda_compiler_version', 'None') %}
 
@@ -9,12 +9,12 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
-  sha256: a2e2d7f0c1f340ab2597f2b9c02563f0057419a53287fbf4cdf1a7934bc6d60b
+  sha256: 95fea9daec6c2d5f0453159dbcd5efb26cb23997f0981e49fe9793a2fd342313
 
 build:
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux or aarch64]
   script: {{ PYTHON }} -m pip install . -vv
-  number: 1
+  number: 0
   skip: true  # [win]
   # 2024/11 Building with CUDA 11.8 seems to fail due to running out of disk space on the CIs
   # (confirming https://github.com/conda-forge/pytorch-cpu-feedstock/blob/main/recipe/meta.yaml)
