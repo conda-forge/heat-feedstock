@@ -16,14 +16,8 @@ c_stdlib_version:                  # [osx and x86_64] - Combined macOS and Linux
   - 2.28                          # [linux64] # Non-CUDA alma8
   - 2.28                          # [linux64] # CUDA 12.6 alma8/9 (added for length)
 
-# MACOSX_SDK_VERSION:                # [osx] - Keep if needed, but as a single definition if uncommented
-#   - 13.3                          # [osx]
-
-
 # --- Linux and aarch64 & linux64 Settings (CUDA and glibc related overrides) ---
 # These comments are kept for documentation, but the keys below are NOT sections, they are single definitions.
-
-
 docker_image:                                # [linux and aarch64 + linux64] - Combined definitions
   - quay.io/condaforge/linux-anvil-cos7-x86_64         # [linux and aarch64] # Non-CUDA cos7
   - quay.io/condaforge/linux-anvil-cuda:11.8            # [linux and aarch64] # CUDA 11.8 cos7
@@ -35,7 +29,6 @@ docker_image:                                # [linux and aarch64 + linux64] - C
   - quay.io/condaforge/linux-anvil-cos7-x86_64         # [linux64] # Non-CUDA cos7 (duplicate for length)
   - quay.io/condaforge/linux-anvil-alma-x86_64:8       # [linux64] # Non-CUDA alma8
   - quay.io/condaforge/linux-anvil-alma-x86_64:8       # [linux64] # CUDA 12.6 alma8/9 (added for CUDA 12.6) # Note: original used alma8/9 image, now alma8 to match length. Verify image.
-
 
 cdt_name:                                  # [linux and aarch64 + linux64] - Combined definitions
   - cos7                                  # [linux and aarch64] # Non-CUDA cos7
@@ -49,7 +42,6 @@ cdt_name:                                  # [linux and aarch64 + linux64] - Com
   - cos7                                  # [linux64] # Non-CUDA alma8 (using cos7 CDT for consistency or if alma8 CDT not required)
   - cos7                                  # [linux64] # CUDA 12.x alma8/9 (added for length, using cos7 CDT)
 
-
 cuda_compiler:                             # [linux and aarch64 + linux64] - Combined definitions
   - None                                  # [linux and aarch64] # Non-CUDA
   - nvcc                                  # [linux and aarch64] # CUDA 11.8
@@ -61,7 +53,6 @@ cuda_compiler:                             # [linux and aarch64 + linux64] - Com
   - cuda-nvcc                             # [linux64] # CUDA 12.0 (using cuda-nvcc as per global pinnings for CUDA)
   - cuda-nvcc                             # [linux64] # CUDA 12.2 (using cuda-nvcc as per global pinnings for CUDA)
   - cuda-nvcc                             # [linux64] # CUDA 12.6 (using cuda-nvcc as per global pinnings for CUDA)
-
 
 cuda_compiler_version:                     # [linux and aarch64 + linux64] - Combined definitions
   - None                                  # [linux and aarch64] # Non-CUDA
