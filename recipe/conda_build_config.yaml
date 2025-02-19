@@ -1,128 +1,82 @@
 # conda_build_config.yaml for heat-feedstock (adapted for global pinnings)
 
 # --- macOS Specific Settings ---
-# Keep these as they seem to address specific macOS requirements and are not directly
-# conflicting with global pinnings (though MACOSX_DEPLOYMENT_TARGET exists globally)
+# Keep these as they seem to address specific macOS requirements
 
-c_stdlib_version:                  # [osx and x86_64]
+c_stdlib_version:                  # [osx and x86_64] - Combined macOS and Linux/aarch64/linux64 definitions
   - 10.15                         # [osx and x86_64]
+  - 2.17                          # [linux and aarch64] # Non-CUDA cos7
+  - 2.17                          # [linux and aarch64] # CUDA 11.8 cos7
+  - 2.28                          # [linux and aarch64] # Non-CUDA alma8
+  - 2.28                          # [linux and aarch64] # Non-CUDA alma8 (duplicate for length)
+  - 2.28                          # [linux and aarch64] # CUDA 12.x alma8/9 (added for length)
+  - 2.17                          # [linux64] # Non-CUDA cos7
+  - 2.17                          # [linux64] # CUDA 11.8 cos7
+  - 2.17                          # [linux64] # Non-CUDA cos7 (duplicate for length)
+  - 2.28                          # [linux64] # Non-CUDA alma8
+  - 2.28                          # [linux64] # CUDA 12.6 alma8/9 (added for length)
 
-# MACOSX_SDK_VERSION:                # [osx]
-#  - 13.3                          # [osx]
+# MACOSX_SDK_VERSION:                # [osx] - Keep if needed, but as a single definition if uncommented
+#   - 13.3                          # [osx]
 
 
 # --- Linux and aarch64 & linux64 Settings (CUDA and glibc related overrides) ---
-#  These sections address CUDA and glibc requirements, which necessitate some overrides.
-#  We will keep c_stdlib_version and docker_image overrides, but remove redundant compiler versions.
-
-c_stdlib_version:                                                       # [linux and aarch64]
-  - 2.17                                                                 # [linux and aarch64] # Non-CUDA cos7
-  - 2.17                                                                 # [linux and aarch64] # CUDA 11.8 cos7
-  - 2.28                                                                 # [linux and aarch64] # Non-CUDA alma8
-  - 2.28                                                                 # [linux and aarch64] # Non-CUDA alma8 (duplicate for length)
-  - 2.28                                                                 # [linux and aarch64] # CUDA 12.x alma8/9 (added for length)
-docker_image:                                                           # [linux and aarch64]
-  - quay.io/condaforge/linux-anvil-cos7-x86_64                         # [linux and aarch64] # Non-CUDA cos7
-  - quay.io/condaforge/linux-anvil-cuda:11.8                            # [linux and aarch64] # CUDA 11.8 cos7
-  - quay.io/condaforge/linux-anvil-alma-x86_64:8                       # [linux and aarch64] # Non-CUDA alma8
-  - quay.io/condaforge/linux-anvil-alma-x86_64:8                       # [linux and aarch64] # Non-CUDA alma8 (duplicate for length)
-  - quay.io/condaforge/linux-anvil-alma-x86_64:8                        # [linux and aarch64] # CUDA 12.6 alma8 (added for CUDA 12.6)
-
-# Removed redundant compiler versions - relying on global pinnings for these in linux/aarch64
-# c_compiler_version:                                                       # [linux and aarch64]
-#   - 13                                                                   # [linux and aarch64]
-#   - 11                                                                   # [linux and aarch64]
-#   - 12                                                                   # [linux and aarch64]
-#   - 12                                                                   # [linux and aarch64]
-#   - 12                                                                   # [linux and aarch64]
-# cxx_compiler_version:                                                       # [linux and aarch64]
-#   - 13                                                                   # [linux and aarch64]
-#   - 11                                                                   # [linux and aarch64]
-#   - 12                                                                   # [linux and aarch64]
-#   - 12                                                                   # [linux and aarch64]
-#   - 12                                                                   # [linux and aarch64]
-# fortran_compiler_version:                                                   # [linux and aarch64]
-#   - 13                                                                   # [linux and aarch64]
-#   - 11                                                                   # [linux and aarch64]
-#   - 12                                                                   # [linux and aarch64]
-#   - 12                                                                   # [linux and aarch64]
-#   - 12                                                                   # [linux and aarch64]
-
-cdt_name:                                                                 # [linux and aarch64]
-  - cos7                                                                 # [linux and aarch64] # Non-CUDA cos7
-  - cos7                                                                 # [linux and aarch64] # CUDA 11.8 cos7
-  - cos7                                                                 # [linux and aarch64] # Non-CUDA alma8 (using cos7 CDT for consistency or if alma8 CDT not required)
-  - cos7                                                                 # [linux and aarch64] # Non-CUDA alma8 (duplicate for length, using cos7 CDT)
-  - cos7                                                                 # [linux and aarch64] # CUDA 12.x alma8/9 (added for length, using cos7 CDT)
+# These comments are kept for documentation, but the keys below are NOT sections, they are single definitions.
 
 
-cuda_compiler:                                                           # [linux and aarch64]
-  - None                                                                 # [linux and aarch64] # Non-CUDA
-  - nvcc                                                                 # [linux and aarch64] # CUDA 11.8
-  - cuda-nvcc                                                            # [linux and aarch64] # CUDA 12.0 (using cuda-nvcc as per global pinnings for CUDA)
-  - cuda-nvcc                                                            # [linux and aarch64] # CUDA 12.2 (using cuda-nvcc as per global pinnings for CUDA)
-  - cuda-nvcc                                                            # [linux and aarch64] # CUDA 12.6 (using cuda-nvcc as per global pinnings for CUDA)
-
-cuda_compiler_version:                                                   # [linux and aarch64]
-  - None                                                                 # [linux and aarch64] # Non-CUDA
-  - 11.8                                                                 # [linux and aarch64] # CUDA 11.8
-  - 12.0                                                                 # [linux and aarch64] # CUDA 12.0
-  - 12.2                                                                 # [linux and aarch64] # CUDA 12.2
-  - 12.6                                                                 # [linux and aarch64] # CUDA 12.6
-# end override of monster zip
+docker_image:                                # [linux and aarch64 + linux64] - Combined definitions
+  - quay.io/condaforge/linux-anvil-cos7-x86_64         # [linux and aarch64] # Non-CUDA cos7
+  - quay.io/condaforge/linux-anvil-cuda:11.8            # [linux and aarch64] # CUDA 11.8 cos7
+  - quay.io/condaforge/linux-anvil-alma-x86_64:8       # [linux and aarch64] # Non-CUDA alma8
+  - quay.io/condaforge/linux-anvil-alma-x86_64:8       # [linux and aarch64] # Non-CUDA alma8 (duplicate for length)
+  - quay.io/condaforge/linux-anvil-alma-x86_64:8       # [linux and aarch64] # CUDA 12.6 alma8 (added for CUDA 12.6) # Note: original used alma8/9 image, now alma8 to match length. Verify image.
+  - quay.io/condaforge/linux-anvil-cos7-x86_64         # [linux64] # Non-CUDA cos7
+  - quay.io/condaforge/linux-anvil-cuda:11.8            # [linux64] # CUDA 11.8 cos7
+  - quay.io/condaforge/linux-anvil-cos7-x86_64         # [linux64] # Non-CUDA cos7 (duplicate for length)
+  - quay.io/condaforge/linux-anvil-alma-x86_64:8       # [linux64] # Non-CUDA alma8
+  - quay.io/condaforge/linux-anvil-alma-x86_64:8       # [linux64] # CUDA 12.6 alma8/9 (added for CUDA 12.6) # Note: original used alma8/9 image, now alma8 to match length. Verify image.
 
 
-c_stdlib_version:                                                       # [linux64]
-  - 2.17                                                                 # [linux64] # Non-CUDA cos7
-  - 2.17                                                                 # [linux64] # CUDA 11.8 cos7
-  - 2.17                                                                 # [linux64] # Non-CUDA cos7 (duplicate for length)
-  - 2.28                                                                 # [linux64] # Non-CUDA alma8
-  - 2.28                                                                 # [linux64] # CUDA 12.6 alma8/9 (added for length)
-docker_image:                                                           # [linux64]
-  - quay.io/condaforge/linux-anvil-cos7-x86_64                         # [linux64] # Non-CUDA cos7
-  - quay.io/condaforge/linux-anvil-cuda:11.8                            # [linux64] # CUDA 11.8 cos7
-  - quay.io/condaforge/linux-anvil-cos7-x86_64                         # [linux64] # Non-CUDA cos7 (duplicate for length)
-  - quay.io/condaforge/linux-anvil-alma-x86_64:8                       # [linux64] # Non-CUDA alma8
-  - quay.io/condaforge/linux-anvil-alma-x86_64:8                           # [linux64] # CUDA 12.6 alma8/9 (added for CUDA 12.6)
-
-# Removed redundant compiler versions - relying on global pinnings for these in linux64
-# c_compiler_version:                                                       # [linux64]
-#   - 13                                                                   # [linux64]
-#   - 11                                                                   # [linux64]
-#   - 12                                                                   # [linux64]
-#   - 12                                                                   # [linux64]
-#   - 12                                                                   # [linux64]
-# cxx_compiler_version:                                                       # [linux64]
-#   - 13                                                                   # [linux64]
-#   - 11                                                                   # [linux64]
-#   - 12                                                                   # [linux64]
-#   - 12                                                                   # [linux64]
-#   - 12                                                                   # [linux64]
-# fortran_compiler_version:                                                   # [linux64]
-#   - 13                                                                   # [linux64]
-#   - 11                                                                   # [linux64]
-#   - 12                                                                   # [linux64]
-#   - 12                                                                   # [linux64]
-#   - 12                                                                   # [linux64]
-
-cdt_name:                                                                 # [linux64]
-  - cos7                                                                 # [linux64] # Non-CUDA cos7
-  - cos7                                                                 # [linux64] # CUDA 11.8 cos7
-  - cos7                                                                 # [linux64] # Non-CUDA cos7 (duplicate for length)
-  - cos7                                                                 # [linux64] # Non-CUDA alma8 (using cos7 CDT for consistency or if alma8 CDT not required)
-  - cos7                                                                 # [linux64] # CUDA 12.x alma8/9 (added for length, using cos7 CDT)
+cdt_name:                                  # [linux and aarch64 + linux64] - Combined definitions
+  - cos7                                  # [linux and aarch64] # Non-CUDA cos7
+  - cos7                                  # [linux and aarch64] # CUDA 11.8 cos7
+  - cos7                                  # [linux and aarch64] # Non-CUDA alma8 (using cos7 CDT for consistency or if alma8 CDT not required)
+  - cos7                                  # [linux and aarch64] # Non-CUDA alma8 (duplicate for length, using cos7 CDT)
+  - cos7                                  # [linux and aarch64] # CUDA 12.x alma8/9 (added for length, using cos7 CDT)
+  - cos7                                  # [linux64] # Non-CUDA cos7
+  - cos7                                  # [linux64] # CUDA 11.8 cos7
+  - cos7                                  # [linux64] # Non-CUDA cos7 (duplicate for length)
+  - cos7                                  # [linux64] # Non-CUDA alma8 (using cos7 CDT for consistency or if alma8 CDT not required)
+  - cos7                                  # [linux64] # CUDA 12.x alma8/9 (added for length, using cos7 CDT)
 
 
-cuda_compiler:                                                           # [linux64]
-  - None                                                                 # [linux64] # Non-CUDA
-  - nvcc                                                                 # [linux64] # CUDA 11.8
-  - cuda-nvcc                                                            # [linux64] # CUDA 12.0 (using cuda-nvcc as per global pinnings for CUDA)
-  - cuda-nvcc                                                            # [linux64] # CUDA 12.2 (using cuda-nvcc as per global pinnings for CUDA)
-  - cuda-nvcc                                                            # [linux64] # CUDA 12.6 (using cuda-nvcc as per global pinnings for CUDA)
+cuda_compiler:                             # [linux and aarch64 + linux64] - Combined definitions
+  - None                                  # [linux and aarch64] # Non-CUDA
+  - nvcc                                  # [linux and aarch64] # CUDA 11.8
+  - cuda-nvcc                             # [linux and aarch64] # CUDA 12.0 (using cuda-nvcc as per global pinnings for CUDA)
+  - cuda-nvcc                             # [linux and aarch64] # CUDA 12.2 (using cuda-nvcc as per global pinnings for CUDA)
+  - cuda-nvcc                             # [linux and aarch64] # CUDA 12.6 (using cuda-nvcc as per global pinnings for CUDA)
+  - None                                  # [linux64] # Non-CUDA
+  - nvcc                                  # [linux64] # CUDA 11.8
+  - cuda-nvcc                             # [linux64] # CUDA 12.0 (using cuda-nvcc as per global pinnings for CUDA)
+  - cuda-nvcc                             # [linux64] # CUDA 12.2 (using cuda-nvcc as per global pinnings for CUDA)
+  - cuda-nvcc                             # [linux64] # CUDA 12.6 (using cuda-nvcc as per global pinnings for CUDA)
 
-cuda_compiler_version:                                                   # [linux64]
-  - None                                                                 # [linux64] # Non-CUDA
-  - 11.8                                                                 # [linux64] # CUDA 11.8
-  - 12.0                                                                 # [linux64] # CUDA 12.0
-  - 12.2                                                                 # [linux64] # CUDA 12.2
-  - 12.6                                                                 # [linux64] # CUDA 12.6
+
+cuda_compiler_version:                     # [linux and aarch64 + linux64] - Combined definitions
+  - None                                  # [linux and aarch64] # Non-CUDA
+  - 11.8                                  # [linux and aarch64] # CUDA 11.8
+  - 12.0                                  # [linux and aarch64] # CUDA 12.0
+  - 12.2                                  # [linux and aarch64] # CUDA 12.2
+  - 12.6                                  # [linux and aarch64] # CUDA 12.6
+  - None                                  # [linux64] # Non-CUDA
+  - 11.8                                  # [linux64] # CUDA 11.8
+  - 12.0                                  # [linux64] # CUDA 12.0
+  - 12.2                                  # [linux64] # CUDA 12.2
+  - 12.6                                  # [linux64] # CUDA 12.6
+
+
+# --- Removed Compiler Version Overrides (relying on global pinnings) ---
+# These sections are now removed to rely on global compiler pinnings for linux and linux64.
+# If specific compiler versions are needed, they should be added back as single definitions with lists of values,
+# similar to how c_stdlib_version, docker_image, etc., are now structured.
