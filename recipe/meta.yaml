@@ -16,7 +16,7 @@ build:
   script: {{ PYTHON }} -m pip install . -vv
   number: 0
   #skip: true  # [win or cuda_compiler_version == "12.6"]
-  skip: true  # [win or cuda_compiler_version == "11.8" or (c_stdlib_version == "2.28" and cuda_compiler_version == "12.6")]
+  skip: true  # [win or cuda_compiler_version == "11.8" or (c_stdlib_version == "2.28" and cuda_compiler_version != "12.6")]
   # 2024/11 Building with CUDA 11.8 seems to fail due to running out of disk space on the CIs
   # (confirming https://github.com/conda-forge/pytorch-cpu-feedstock/blob/main/recipe/meta.yaml)
   # 2024/11: Following stdlib/cuda combination fails
