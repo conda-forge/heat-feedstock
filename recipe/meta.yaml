@@ -1,5 +1,5 @@
 {% set name = "heat" %}
-{% set version = "1.5.0" %}
+{% set version = "1.5.1" %}
 {% set cuda_compiler = os.environ.get('cuda_compiler', 'None') %}
 {% set cuda_compiler_version = os.environ.get('cuda_compiler_version', 'None') %}
 
@@ -9,18 +9,14 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
-  sha256: a2e2d7f0c1f340ab2597f2b9c02563f0057419a53287fbf4cdf1a7934bc6d60b
+  sha256: 95fea9daec6c2d5f0453159dbcd5efb26cb23997f0981e49fe9793a2fd342313
 
 build:
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux or aarch64]
   script: {{ PYTHON }} -m pip install . -vv
-  number: 1
-  skip: true  # [win]
-  # 2024/11 Building with CUDA 11.8 seems to fail due to running out of disk space on the CIs
-  # (confirming https://github.com/conda-forge/pytorch-cpu-feedstock/blob/main/recipe/meta.yaml)
-  # 2024/11: Following stdlib/cuda combination fails
-  skip: true  # [cuda_compiler_version == "11.8" or (c_stdlib_version == "2.28" and cuda_compiler_version != "12.6")]
-
+  number: 0
+  # pytorch no longer supports cuda<12
+  skip: true  # [win or cuda_compiler_version == "11.8"]
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
@@ -62,11 +58,11 @@ outputs:
         - openmpi
         - mpi4py >=3.0.0
         - numpy >=1.22,<2.0.0
-        - pytorch >=1.12.0,<2.3.2        # [osx or cuda_compiler_version == "None"]     
-        - pytorch-gpu >=1.12.0,<2.3.2    # [cuda_compiler_version != "None" and (linux or aarch64)]     
+        - pytorch >=2.0.0,<2.6.1        # [osx or cuda_compiler_version == "None"]     
+        - pytorch-gpu >=2.0.0,<2.6.1    # [cuda_compiler_version != "None" and (linux or aarch64)]     
         - scipy >=0.14.0
         - pillow >=6.0.0
-        - torchvision >=0.8.0
+        - torchvision >=0.15.2,<0.21.1
         - h5py >=2.8.0=mpi*
         - netCDF4 >=1.5.6
         - scikit-learn >=0.24.0
