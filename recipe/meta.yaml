@@ -59,7 +59,7 @@ outputs:
         - mpi4py >=3.0.0
         - numpy >=1.22,<2.0.0
         - pytorch >=2.0.0,<2.6.1        # [osx or cuda_compiler_version == "None"]     
-        - pytorch =*=cuda* >=2.0.0,<2.6.1    # [cuda_compiler_version != "None" and (linux or aarch64)]     
+        - pytorch-gpu >=2.0.0,<2.6.1    # [cuda_compiler_version != "None" and (linux or aarch64)]     
         - scipy >=0.14.0
         - pillow >=6.0.0
         - torchvision >=0.15.2,<0.21.1
