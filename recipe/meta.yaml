@@ -17,6 +17,7 @@ build:
   number: 1
   # pytorch no longer supports cuda<12
   skip: true  # [win or cuda_compiler_version == "11.8"]
+
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
@@ -25,12 +26,12 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
-    - {{ compiler('cuda') }}         # [cuda_compiler != 'None' and linux or aarch64]
-    - libgomp  # [linux or aarch64]
+    - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
+    - libgomp      # [linux]
     - llvm-openmp  # [osx]
   host:
     # GPU requirements
-    {% if cuda_compiler != 'None' %}
+    {% if cuda_compiler_version != 'None' %}
     - cudnn
     - nccl
     - magma
@@ -58,8 +59,8 @@ outputs:
         - openmpi
         - mpi4py >=3.0.0
         - numpy >=1.22,<2.0.0
-        - pytorch >=2.0.0,<2.6.1        # [osx or cuda_compiler_version == "None"]     
-        - pytorch-gpu >=2.0.0,<2.6.1    # [cuda_compiler_version != "None" and (linux or aarch64)]     
+        - pytorch >=2.0.0,<2.6.1
+        - pytorch * cuda*           # [cuda_compiler_version != "None"]
         - scipy >=0.14.0
         - pillow >=6.0.0
         - torchvision >=0.15.2,<0.21.1
