@@ -12,11 +12,13 @@ source:
   sha256: 95fea9daec6c2d5f0453159dbcd5efb26cb23997f0981e49fe9793a2fd342313
 
 build:
+  number: 1
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux or aarch64]
   script: {{ PYTHON }} -m pip install . -vv
-  number: 1
   # pytorch no longer supports cuda<12
   skip: true  # [win or cuda_compiler_version == "11.8"]
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
+  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == "None"]
 
 requirements:
   build:
