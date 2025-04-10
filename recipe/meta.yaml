@@ -12,11 +12,14 @@ source:
   sha256: 95fea9daec6c2d5f0453159dbcd5efb26cb23997f0981e49fe9793a2fd342313
 
 build:
+  number: 1
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux or aarch64]
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
   # pytorch no longer supports cuda<12
   skip: true  # [win or cuda_compiler_version == "11.8"]
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
+  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == "None"]
+
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
@@ -25,12 +28,12 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
-    - {{ compiler('cuda') }}         # [cuda_compiler != 'None' and linux or aarch64]
-    - libgomp  # [linux or aarch64]
+    - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
+    - libgomp      # [linux]
     - llvm-openmp  # [osx]
   host:
     # GPU requirements
-    {% if cuda_compiler != 'None' %}
+    {% if cuda_compiler_version != 'None' %}
     - cudnn
     - nccl
     - magma
@@ -41,6 +44,21 @@ requirements:
     - pip
     - openmpi
     - setuptools
+  run:
+    - python
+    - openmpi
+    - mpi4py >=3.0.0
+    - numpy >=1.22,<2.0.0
+    - pytorch >=2.0.0,<2.6.1
+    - scipy >=0.14.0
+    - pillow >=6.0.0
+    - torchvision >=0.15.2,<0.21.1
+    - h5py >=2.8.0
+    - h5py * mpi*
+    - netCDF4 >=1.5.6
+    - scikit-learn >=0.24.0
+    - libgomp  # [linux or aarch64]
+    - llvm-openmp  # [osx]
 
 test:
   imports:
@@ -49,25 +67,6 @@ test:
     - pip check
   requires:
     - pip
-
-outputs:
-  - name: heat
-    requirements:
-      run:
-        - python
-        - openmpi
-        - mpi4py >=3.0.0
-        - numpy >=1.22,<2.0.0
-        - pytorch >=2.0.0,<2.6.1        # [osx or cuda_compiler_version == "None"]     
-        - pytorch-gpu >=2.0.0,<2.6.1    # [cuda_compiler_version != "None" and (linux or aarch64)]     
-        - scipy >=0.14.0
-        - pillow >=6.0.0
-        - torchvision >=0.15.2,<0.21.1
-        - h5py >=2.8.0=mpi*
-        - netCDF4 >=1.5.6
-        - scikit-learn >=0.24.0
-        - libgomp  # [linux or aarch64]
-        - llvm-openmp  # [osx]
 
 about:
   home: https://github.com/helmholtz-analytics/heat
