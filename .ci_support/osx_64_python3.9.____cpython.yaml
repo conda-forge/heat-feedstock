@@ -29,7 +29,7 @@ llvm_openmp:
 macos_machine:
 - x86_64-apple-darwin13.4.0
 magma:
-- '2.8'
+- '2.9'
 nccl:
 - '2'
 openmpi:
