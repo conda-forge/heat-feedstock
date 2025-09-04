@@ -1,5 +1,5 @@
 {% set name = "heat" %}
-{% set version = "1.6.0" %}
+{% set version = "1.5.1" %}
 {% set cuda_compiler_version = os.environ.get('cuda_compiler_version', 'None') %}
 
 package:
@@ -8,16 +8,16 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
-  sha256: cd011e67c284b7f94d0f1c6ff8bf5309535fa26a895b0db2df83290c47dae55b
+  sha256: 95fea9daec6c2d5f0453159dbcd5efb26cb23997f0981e49fe9793a2fd342313
 
 build:
-  number: 0
+  number: 3
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux or aarch64]
   script: {{ PYTHON }} -m pip install . -vv
   # pytorch no longer supports cuda<12
   skip: true  # [win or cuda_compiler_version == "11.8"]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
+  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == "None"]
 
 requirements:
   build:
@@ -47,10 +47,11 @@ requirements:
     - python
     - openmpi
     - mpi4py >=3.0.0
-    - pytorch >=2.0.0,<2.8.0
+    - numpy >=1.22,<2.0.0
+    - pytorch >=2.0.0,<2.6.1
     - scipy >=0.14.0
     - pillow >=6.0.0
-    - torchvision >=0.15.2
+    - torchvision >=0.15.2,<0.21.1
     - h5py >=2.8.0
     - h5py * mpi*
     - netCDF4 >=1.5.6
