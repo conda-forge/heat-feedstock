@@ -1,5 +1,5 @@
 {% set name = "heat" %}
-{% set version = "1.6.0" %}
+{% set version = "1.7.0" %}
 {% set cuda_compiler_version = os.environ.get('cuda_compiler_version', 'None') %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
-  sha256: cd011e67c284b7f94d0f1c6ff8bf5309535fa26a895b0db2df83290c47dae55b
+  sha256: 1d787cc5f52fc2123bb69e6e2ee53b268b258abe4ed5be99e53706bcb250175c
 
 build:
   number: 0
