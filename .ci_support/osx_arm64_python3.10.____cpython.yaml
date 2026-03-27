@@ -14,12 +14,8 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-cuda_compiler:
-- cuda-nvcc
 cuda_compiler_version:
 - None
-cudnn:
-- '9'
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
@@ -28,10 +24,6 @@ llvm_openmp:
 - '19'
 macos_machine:
 - arm64-apple-darwin20.0.0
-magma:
-- '2.9'
-nccl:
-- '2'
 openmpi:
 - '5'
 pin_run_as_build:

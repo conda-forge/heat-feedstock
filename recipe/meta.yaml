@@ -1,5 +1,5 @@
 {% set name = "heat" %}
-{% set version = "1.7.0" %}
+{% set version = "1.8.0" %}
 {% set cuda_compiler_version = os.environ.get('cuda_compiler_version', 'None') %}
 
 package:
@@ -8,14 +8,14 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
-  sha256: 1d787cc5f52fc2123bb69e6e2ee53b268b258abe4ed5be99e53706bcb250175c
+  sha256: f0d64e122c88a44ca27ad60d91cdb7250f97c71c971913302ed90d838d7fd253
 
 build:
-  number: 1
+  number: 0
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux or aarch64]
   script: {{ PYTHON }} -m pip install . -vv
   # pytorch no longer supports cuda<12
-  skip: true  # [win or cuda_compiler_version == "11.8"]
+  skip: true  # [win or cuda_compiler_version == "11.8" or py<311]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
 
@@ -46,15 +46,15 @@ requirements:
   run:
     - python
     - openmpi
-    - mpi4py >=3.0.0
-    - pytorch >=2.0.0,<2.8.0
+    - mpi4py >=3.1.0
+    - pytorch >=2.3.0,<2.11.1
     - scipy >=0.14.0
     - pillow >=6.0.0
-    - torchvision >=0.15.2
+    - torchvision >=0.18
     - h5py >=2.8.0
     - h5py * mpi*
     - netCDF4 >=1.5.6
-    - scikit-learn >=0.24.0
+    - zarr
     - libgomp  # [linux or aarch64]
     - llvm-openmp  # [osx]
 
