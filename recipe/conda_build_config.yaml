@@ -1,4 +1,8 @@
-# Following https://github.com/conda-forge/torchvision-feedstock/blob/main/recipe/conda_build_config.yaml
+python:
+  - "3.11"
+  - "3.12"
+  - "3.13"
+  - "3.14"
 
 c_stdlib_version:   # [osx]
   - 11.0            # [osx]
