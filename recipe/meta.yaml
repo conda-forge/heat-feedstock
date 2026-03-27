@@ -31,14 +31,10 @@ requirements:
     - libgomp      # [linux]
     - llvm-openmp  # [osx]
   host:
-    # GPU requirements
-    {% if cuda_compiler_version != 'None' %}
-    - cudnn
-    - nccl
-    - magma
-    - cuda-version {{ cuda_compiler_version }}
-    {% endif %}
-    # everything else
+    - cudnn                                     # [cuda_compiler_version != "None"]
+    - nccl                                      # [cuda_compiler_version != "None"]
+    - magma                                     # [cuda_compiler_version != "None"]
+    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
     - python
     - pip
     - openmpi
