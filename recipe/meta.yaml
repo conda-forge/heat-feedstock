@@ -40,7 +40,7 @@ requirements:
     - openmpi
     - setuptools
   run:
-    - python>=3.11
+    - python
     - openmpi
     - mpi4py >=3.1.0
     - pytorch >=2.3.0,<2.11.1
