@@ -11,7 +11,7 @@ source:
   sha256: f0d64e122c88a44ca27ad60d91cdb7250f97c71c971913302ed90d838d7fd253
 
 build:
-  number: 0
+  number: 1
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux or aarch64]
   script: {{ PYTHON }} -m pip install . -vv
   # pytorch no longer supports cuda<12
