@@ -15,7 +15,7 @@ build:
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux or aarch64]
   script: {{ PYTHON }} -m pip install . -vv
   # pytorch no longer supports cuda<12
-  skip: true  # [win or cuda_compiler_version == "11.8" or py<311]
+  skip: true  # [win or cuda_compiler_version == "11.8" or py<312]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
 
@@ -47,14 +47,14 @@ requirements:
     - python
     - openmpi
     - mpi4py >=3.1.0
-    - pytorch >=2.3.0,<2.11.1
-    - scipy >=0.14.0
+    - pytorch >=2.6.0,<2.14.1
+    - scipy >=0.15.0,<1.18.0
     - pillow >=6.0.0
-    - torchvision >=0.18
-    - h5py >=2.8.0
+    - torchvision >=0.21,<0.29.1
+    - h5py >=3.11.0
     - h5py * mpi*
     - netCDF4 >=1.5.6
-    - zarr
+    - zarr >=3.0,<3.2
     - libgomp  # [linux or aarch64]
     - llvm-openmp  # [osx]
 
@@ -77,5 +77,4 @@ about:
 extra:
   recipe-maintainers:
     - ClaudiaComito
-    - mrfh92
     - JuanPedroGHM
