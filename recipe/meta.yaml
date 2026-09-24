@@ -70,7 +70,7 @@ about:
   home: https://github.com/helmholtz-analytics/heat
   summary: A Python framework for data-intensive analytics and machine learning.
   license: MIT
-  license_file: LICENSE
+  license_file: LICENSES/MIT.txt
   dev_url: https://github.com/helmholtz-analytics/heat
   doc_url: https://heat.readthedocs.io
 
