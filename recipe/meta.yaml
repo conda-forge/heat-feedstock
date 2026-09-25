@@ -45,6 +45,7 @@ requirements:
     - setuptools
   run:
     - python
+    - numpy >=2.2,<2.5    
     - openmpi
     - mpi4py >=3.1.0
     - pytorch >=2.6.0,<2.14.1
