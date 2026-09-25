@@ -1,5 +1,5 @@
 {% set name = "heat" %}
-{% set version = "1.8.0" %}
+{% set version = "1.9.0" %}
 {% set cuda_compiler_version = os.environ.get('cuda_compiler_version', 'None') %}
 
 package:
@@ -7,15 +7,15 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
-  sha256: f0d64e122c88a44ca27ad60d91cdb7250f97c71c971913302ed90d838d7fd253
+  url: https://files.pythonhosted.org/packages/source/{{ name[0] }}/{{ name }}/heat-{{ version }}.tar.gz
+  sha256: cd5aacd7b8dccb2c47b7c088260503ae1eb1a3138048a4b687f48746f1a7f749
 
 build:
-  number: 1
+  number: 0
   script_env: OMPI_MCA_plm_rsh_agent=  # [linux or aarch64]
   script: {{ PYTHON }} -m pip install . -vv
   # pytorch no longer supports cuda<12
-  skip: true  # [win or cuda_compiler_version == "11.8" or py<311]
+  skip: true  # [win or cuda_compiler_version == "11.8" or py<312]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
 
@@ -45,16 +45,17 @@ requirements:
     - setuptools
   run:
     - python
+    - numpy >=2.2,<2.5    
     - openmpi
     - mpi4py >=3.1.0
-    - pytorch >=2.3.0,<2.11.1
-    - scipy >=0.14.0
+    - pytorch >=2.6.0,<2.14.1
+    - scipy >=0.15.0,<1.18.0
     - pillow >=6.0.0
-    - torchvision >=0.18
-    - h5py >=2.8.0
+    - torchvision >=0.21,<0.29.1
+    - h5py >=3.11.0
     - h5py * mpi*
     - netCDF4 >=1.5.6
-    - zarr
+    - zarr >=3.0,<3.2
     - libgomp  # [linux or aarch64]
     - llvm-openmp  # [osx]
 
@@ -77,5 +78,4 @@ about:
 extra:
   recipe-maintainers:
     - ClaudiaComito
-    - mrfh92
     - JuanPedroGHM
